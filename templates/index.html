@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Summarizer</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <h1>📝 Smart Notes Summarizer</h1>
+  <textarea id="inputText" placeholder="Paste your notes here..."></textarea>
+  <button onclick="summarizeText()">Summarize</button>
+  <h2>✨ Summary:</h2>
+  <div id="summaryBox"></div>
+
+  <script>
+    async function summarizeText() {
+      const text = document.getElementById("inputText").value;
+      const res = await fetch("/summarize", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text })
+      });
+      const data = await res.json();
+      document.getElementById("summaryBox").innerText = data.summary;
+    }
+  </script>
+</body>
+</html>
